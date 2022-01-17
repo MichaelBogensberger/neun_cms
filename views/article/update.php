@@ -8,12 +8,19 @@ include "../helper/head.php";
 
 <?php
 include "../helper/article_navbar.php";
+include "../../models/Articles.php";
 
 session_start();
+$post_id = isset($_GET["post_id"]) ? $_GET["post_id"] : "";
+
 if(!isset($_SESSION["id"])){
     header('Location: ../../index.php');
+} elseif (!$post_id) {
+    header('Location: ../article/index.php');
 }
 
+$data = Articles::get($post_id);
+$users = Articles::getAllUsers();
 
 ?>
 
@@ -22,31 +29,39 @@ if(!isset($_SESSION["id"])){
         <h2>Beitrag bearbeiten</h2>
     </div>
 
-    <form class="form-horizontal" action="update.php?id=3" method="post">
+    <form class="form-horizontal" action="../../models/updatePost.php" method="post">
 
         <div class="row">
             <div class="col-md-5">
                 <div class="form-group required">
                     <label class="control-label">Titel *</label>
-                    <input type="text" class="form-control" name="title" maxlength="45" value="Titel 1">
+                    <input type="text" class="form-control" name="titel" maxlength="45" value="<?php echo $data["titel"] ?>">
                 </div>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-2">
                 <div class="form-group required">
                     <label class="control-label">Freigabedatum *</label>
-                    <input type="date" class="form-control" name="releasedate" value="2017-02-05">
+                    <input type="date" class="form-control" name="datum" value="<?php echo $data["datum"] ?>">
                 </div>
             </div>
             <div class="col-md-1"></div>
             <div class="col-md-3">
                 <div class="form-group required">
                     <label class="control-label">Besitzer *</label>
-                    <select class="form-control" name="owner">
+                    <select class="form-control" name="user_id">
                         <option value="">-Besitzer auswählen-</option>
-                        <option value="1" selected>User 1</option>
-                        <option value="2">User 2</option>
-                        <option value="3">User 3</option>
+                        <option value="<?php echo $data["user_id"] ?>" selected><?php echo Articles::getUser($data["user_id"])["username"] ?></option>
+                        <?php
+                            foreach ($users as $user) {
+                                if($user["id"] != $data["user_id"]){
+                                    ?>
+                                        <option value="<?php echo $user["id"] ?>"><?php echo $user["username"] ?></option>
+                                    <?php
+                                }
+                            }
+
+                        ?>
                     </select>
                 </div>
             </div>
@@ -56,12 +71,12 @@ if(!isset($_SESSION["id"])){
             <div class="col-md-12">
                 <div class="form-group required">
                     <label class="control-label">Inhalt *</label>
-                    <textarea class="form-control" name="content" rows="10">Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                    <input type="text" class="form-control" name="inhalt" rows="10" value="<?php echo $data["inhalt"] ?>">
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Aktualisieren</button>
+            <button type="submit" name="post_id" value="<?php echo $post_id ?>" class="btn btn-primary">Aktualisieren</button>
             <a class="btn btn-default" href="index.php">Abbruch</a>
         </div>
     </form>

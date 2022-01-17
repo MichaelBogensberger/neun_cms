@@ -2,7 +2,7 @@
 <html lang="de">
 <?php
 include "../helper/head.php";
-include "../../models/Database.php";
+include "../../models/Articles.php";
 ?>
 
 <body>
@@ -43,7 +43,7 @@ if(!isset($_SESSION["id"])){
             <tbody>
 
             <?php
-            $data = Database::getAll();
+            $data = Articles::getAll();
             foreach ($data as $beitrag) {
                 ?>
 
@@ -53,10 +53,10 @@ if(!isset($_SESSION["id"])){
                 <td><?php  echo $beitrag["username"]; ?></td>
                 <td><?php  echo $beitrag["datum"]; ?></td>
                 <td><a class="btn btn-info" href="view.php?p_id=<?php echo $beitrag["post_id"]; ?>"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;<a
-                            class="btn btn-primary" href="update.php?id=<?php echo $beitrag["post_id"]; ?>"><span
-                                class="glyphicon glyphicon-pencil"></span></a>&nbsp;<a
-                            class="btn btn-danger" href="delete.php?id=<?php echo $beitrag["post_id"]; ?>"><span
-                                class="glyphicon glyphicon-remove"></span></a>
+                            class="btn btn-primary" href="update.php?post_id=<?php echo $beitrag["post_id"]; ?>"><span
+                            class="glyphicon glyphicon-pencil"></span></a>&nbsp;<a
+                            class="btn btn-danger" href="delete.php?post_id=<?php echo $beitrag["post_id"]; ?>"><span
+                            class="glyphicon glyphicon-remove"></span></a>
                 </td>
             </tr>
 

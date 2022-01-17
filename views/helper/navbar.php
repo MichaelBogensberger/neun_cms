@@ -26,6 +26,7 @@ $path = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_FILENAME);
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="views/article/index.php">Beiträge</a></li>
+                <li><a href="views/article/index.php">#Benutzer#</a></li>
             </ul>
 
             <form class="navbar-form navbar-right" action="models/logout.php">

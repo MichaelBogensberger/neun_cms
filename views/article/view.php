@@ -2,7 +2,7 @@
 <html lang="de">
 <?php
 include "../helper/head.php";
-include "../../models/Database.php";
+include "../../models/Articles.php";
 ?>
 
 <body>
@@ -17,7 +17,7 @@ if(!isset($_SESSION["id"])){
 
 
 $p_id = $_GET['p_id'];
-$data = Database::get($p_id);
+$data = Articles::get($p_id);
 
 ?>
 
@@ -25,18 +25,13 @@ $data = Database::get($p_id);
     <h2>Beitrag anzeigen</h2>
 
     <p>
-        <a class="btn btn-primary" href="update.php?id=<?php echo $data["post_id"]; ?>">Aktualisieren</a>
-        <a class="btn btn-danger" href="delete.php?id=<?php echo $data["post_id"]; ?>">Löschen</a>
+        <a class="btn btn-primary" href="update.php?post_id=<?php echo $data["id"]; ?>">Aktualisieren</a>
+        <a class="btn btn-danger" href="delete.php?post_id=<?php echo $data["id"]; ?>">Löschen</a>
         <a class="btn btn-default" href="index.php">Zurück</a>
     </p>
 
     <table class="table table-striped table-bordered detail-view">
         <tbody>
-
-
-
-
-
 
         <tr>
             <th>Titel</th>
@@ -48,7 +43,7 @@ $data = Database::get($p_id);
         </tr>
         <tr>
             <th>Besitzer</th>
-            <td><?php echo $data["username"] ?></td>
+            <td><?php echo Articles::getUser($data["user_id"])["username"] ?></td>
         </tr>
         <tr>
             <th>Inhalt</th>

@@ -40,7 +40,7 @@ $path = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_FILENAME);
 
 
 
-           
+        
         </div>
         <!--/.navbar-collapse -->
     </div>

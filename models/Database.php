@@ -1,7 +1,6 @@
 <?php
-include "DatabaseObject.php";
 
-class Database implements DatabaseObject
+class Database
 {
     private static $dbName = 'cms';
     private static $dbHost = 'localhost';
@@ -33,41 +32,6 @@ class Database implements DatabaseObject
     {
         self::$conn = null;
     }
-
-    function update() {
-    }
-
-    static function create($titel, $inhalt, $datum, $user_id) {
-        $db = Database::connect();
-        $sql = "INSERT INTO post (titel, datum, inhalt, user_id) 
-        VALUES ('$titel', '$inhalt', '$datum', '$user_id')";
-        $db->exec($sql);
-    }
-    
-
-    static function get($id) {
-        $db = Database::connect();
-        $sql = 'SELECT u.id, u.username, p.titel, p.datum, p.inhalt, p.id as post_id FROM user as u INNER JOIN post as p ON u.id = p.user_id WHERE p.id = ?';
-        $stmt = $db->prepare($sql);
-        $stmt->execute([$id]);
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data;
-    }
-
-    static function getAll() {
-        $db = Database::connect();
-        $sql = 'SELECT u.id, u.username, p.titel, p.datum, p.inhalt, p.id as post_id FROM user as u INNER JOIN post as p ON u.id = p.user_id';
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $data;
-    }
-
-    static function delete($id) {
-    }
-
-
-
 
 }
 
