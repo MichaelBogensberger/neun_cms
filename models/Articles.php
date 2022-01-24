@@ -4,12 +4,13 @@ require_once "DatabaseObject.php";
 
 class Articles implements DatabaseObject {
 
+    /*
     public $id = 0;
     public $titel = '';
     public $inhalt = '';
     public $datum = '';
     public $user_id = '';
-
+    */
 
     public function create($titel, $inhalt, $datum, $user_id){
         $db = Database::connect();
